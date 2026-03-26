@@ -36,12 +36,10 @@ dev_dependencies:
 
   # Add this configuration at the very bottom of the file (not indented under anything)
 flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/chat_icon_image.png"
-  web:
-    generate: true
-    image_path: "assets/chat_icon_image.png"
+  android: "launcher_icon" # Change this from 'chat_icon_image' to 'launcher_icon'
+  image_path: "assets/chat_icon_image.png" # Ensure this file exists and is a valid PNG
+  adaptive_icon_background: "#8B5E3C"
+  adaptive_icon_foreground: "assets/chat_icon_image.png"
 
 flutter:
   uses-material-design: true
