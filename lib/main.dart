@@ -4,7 +4,7 @@ import 'firebase_options.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:chat_app/screens/auth_wrapper.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:chat_app/services/notification_service.dart'; // NEW IMPORT
+import 'package:chat_app/services/notification_service.dart';
 
 const Color kRichBlack = Color(0xFF1D1F24);
 const Color kBrown = Color(0xFF8B5E3C);
@@ -15,16 +15,23 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  try {
+    // Attempt initialization
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  // ✅ INITIALIZE NOTIFICATIONS
-  await NotificationService.initialize();
+    // INITIALIZE NOTIFICATIONS
+    await NotificationService.initialize();
+  } catch (e) {
+    // Log the error to terminal for debugging
+    debugPrint("Initialization Error: $e");
+  } finally {
+    // ALWAYS remove the splash screen, regardless of success or failure
+    FlutterNativeSplash.remove();
+  }
 
   runApp(const MyApp());
-
-  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
